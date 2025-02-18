@@ -1,5 +1,4 @@
 using System.Runtime.InteropServices;
-using CtrlCPopup;
 
 public class CtrlCListener : Form {
     [DllImport("user32.dll")]
@@ -26,10 +25,10 @@ public class CtrlCListener : Form {
     protected override void WndProc(ref Message m) {
         if (m.Msg == WM_CLIPBOARDUPDATE) {
             if (IsCtrlCPressed()) {
-                string currentText = Clipboard.GetText();
+                string CurrentText = Clipboard.GetText();
 
-                if (currentText != lastClipboardText) {
-                    lastClipboardText = currentText;
+                if (CurrentText != lastClipboardText) {
+                    lastClipboardText = CurrentText;
                     new PopupForm().ShowPopup("Copied!");
                 }
                 //! Might figure it out later
