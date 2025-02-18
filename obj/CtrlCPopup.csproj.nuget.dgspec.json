@@ -49,16 +49,6 @@
       "frameworks": {
         "net8.0-windows7.0": {
           "targetAlias": "net8.0-windows",
-          "dependencies": {
-            "GlobalHook": {
-              "target": "Package",
-              "version": "[1.0.0, )"
-            },
-            "SharpHook": {
-              "target": "Package",
-              "version": "[5.3.8, )"
-            }
-          },
           "imports": [
             "net461",
             "net462",

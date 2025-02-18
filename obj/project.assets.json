@@ -1,127 +1,11 @@
 {
   "version": 3,
   "targets": {
-    "net8.0-windows7.0": {
-      "GlobalHook/1.0.0": {
-        "type": "package",
-        "compile": {
-          "lib/netstandard2.1/GlobalHook.Core.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard2.1/GlobalHook.Core.dll": {}
-        }
-      },
-      "SharpHook/5.3.8": {
-        "type": "package",
-        "compile": {
-          "lib/net8.0/SharpHook.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtime": {
-          "lib/net8.0/SharpHook.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtimeTargets": {
-          "runtimes/linux-arm/native/libuiohook.so": {
-            "assetType": "native",
-            "rid": "linux-arm"
-          },
-          "runtimes/linux-arm64/native/libuiohook.so": {
-            "assetType": "native",
-            "rid": "linux-arm64"
-          },
-          "runtimes/linux-x64/native/libuiohook.so": {
-            "assetType": "native",
-            "rid": "linux-x64"
-          },
-          "runtimes/maccatalyst-arm64/native/libuiohook.dylib": {
-            "assetType": "native",
-            "rid": "maccatalyst-arm64"
-          },
-          "runtimes/maccatalyst-x64/native/libuiohook.dylib": {
-            "assetType": "native",
-            "rid": "maccatalyst-x64"
-          },
-          "runtimes/osx-arm64/native/libuiohook.dylib": {
-            "assetType": "native",
-            "rid": "osx-arm64"
-          },
-          "runtimes/osx-x64/native/libuiohook.dylib": {
-            "assetType": "native",
-            "rid": "osx-x64"
-          },
-          "runtimes/win-arm64/native/uiohook.dll": {
-            "assetType": "native",
-            "rid": "win-arm64"
-          },
-          "runtimes/win-x64/native/uiohook.dll": {
-            "assetType": "native",
-            "rid": "win-x64"
-          },
-          "runtimes/win-x86/native/uiohook.dll": {
-            "assetType": "native",
-            "rid": "win-x86"
-          }
-        }
-      }
-    }
+    "net8.0-windows7.0": {}
   },
-  "libraries": {
-    "GlobalHook/1.0.0": {
-      "sha512": "mLoarLs+aUZCxDZbMmi2ev0EByub/MMlzjTpQBWejSMUtcli0uen9l2U+k7jseGG+An0f/dVlX2qnAgLxcu/Og==",
-      "type": "package",
-      "path": "globalhook/1.0.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "LICENSE.md",
-        "globalhook.1.0.0.nupkg.sha512",
-        "globalhook.nuspec",
-        "lib/netstandard2.1/GlobalHook.Core.dll"
-      ]
-    },
-    "SharpHook/5.3.8": {
-      "sha512": "vGOVy7fEj/UKnxTbWVUzGWToF+YEI49Gixy7T5aVEeTuPAEZhqFgNjgZKtfufoM4MDYpgbJ2KAn3tsxYOf8UPA==",
-      "type": "package",
-      "path": "sharphook/5.3.8",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "README.md",
-        "build/net462/SharpHook.targets",
-        "icon.png",
-        "lib/net462/SharpHook.dll",
-        "lib/net462/SharpHook.xml",
-        "lib/net6.0/SharpHook.dll",
-        "lib/net6.0/SharpHook.xml",
-        "lib/net7.0/SharpHook.dll",
-        "lib/net7.0/SharpHook.xml",
-        "lib/net8.0/SharpHook.dll",
-        "lib/net8.0/SharpHook.xml",
-        "lib/netstandard2.0/SharpHook.dll",
-        "lib/netstandard2.0/SharpHook.xml",
-        "runtimes/linux-arm/native/libuiohook.so",
-        "runtimes/linux-arm64/native/libuiohook.so",
-        "runtimes/linux-x64/native/libuiohook.so",
-        "runtimes/maccatalyst-arm64/native/libuiohook.dylib",
-        "runtimes/maccatalyst-x64/native/libuiohook.dylib",
-        "runtimes/osx-arm64/native/libuiohook.dylib",
-        "runtimes/osx-x64/native/libuiohook.dylib",
-        "runtimes/win-arm64/native/uiohook.dll",
-        "runtimes/win-x64/native/uiohook.dll",
-        "runtimes/win-x86/native/uiohook.dll",
-        "sharphook.5.3.8.nupkg.sha512",
-        "sharphook.nuspec"
-      ]
-    }
-  },
+  "libraries": {},
   "projectFileDependencyGroups": {
-    "net8.0-windows7.0": [
-      "GlobalHook >= 1.0.0",
-      "SharpHook >= 5.3.8"
-    ]
+    "net8.0-windows7.0": []
   },
   "packageFolders": {
     "C:\\Users\\Kareem Al-Hamwi\\.nuget\\packages\\": {},
@@ -172,16 +56,6 @@
     "frameworks": {
       "net8.0-windows7.0": {
         "targetAlias": "net8.0-windows",
-        "dependencies": {
-          "GlobalHook": {
-            "target": "Package",
-            "version": "[1.0.0, )"
-          },
-          "SharpHook": {
-            "target": "Package",
-            "version": "[5.3.8, )"
-          }
-        },
         "imports": [
           "net461",
           "net462",

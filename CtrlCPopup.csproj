@@ -8,9 +8,4 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="GlobalHook" Version="1.0.0" />
-    <PackageReference Include="SharpHook" Version="5.3.8" />
-  </ItemGroup>
-
 </Project>

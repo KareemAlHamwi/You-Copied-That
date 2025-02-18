@@ -1,11 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "3luw6vT1/Gc=",
+  "dgSpecHash": "CwmSQALNj1g=",
   "success": true,
   "projectFilePath": "D:\\Educational & Miscellaneous\\Programming\\.Programming Advices\\.Projects\\CtrlCPopup\\CtrlCPopup.csproj",
-  "expectedPackageFiles": [
-    "C:\\Users\\Kareem Al-Hamwi\\.nuget\\packages\\globalhook\\1.0.0\\globalhook.1.0.0.nupkg.sha512",
-    "C:\\Users\\Kareem Al-Hamwi\\.nuget\\packages\\sharphook\\5.3.8\\sharphook.5.3.8.nupkg.sha512"
-  ],
+  "expectedPackageFiles": [],
   "logs": []
 }
