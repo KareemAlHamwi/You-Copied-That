@@ -11,7 +11,7 @@ public partial class PopupForm : Form {
     private const double FadeStep = 0.05;
     private System.Windows.Forms.Timer TimerSlide = new System.Windows.Forms.Timer(),
                                       TimerClose = new System.Windows.Forms.Timer(),
-                                      TadeTimer = new System.Windows.Forms.Timer();
+                                      FadeTimer = new System.Windows.Forms.Timer();
     private bool FadingIn = true;
     private static PopupForm CurrentPopup;
     private Label lblMessage;
@@ -29,8 +29,8 @@ public partial class PopupForm : Form {
     public PopupForm() {
         InitializeForm();
 
-        TadeTimer.Interval = 15;
-        TadeTimer.Tick += FadeTimer_Tick;
+        FadeTimer.Interval = 15;
+        FadeTimer.Tick += FadeTimer_Tick;
     }
 
     private void InitializeForm() {
@@ -147,7 +147,7 @@ public partial class PopupForm : Form {
         this.Show();
         TimerSlide.Start();
         TimerClose.Start();
-        TadeTimer.Start();
+        FadeTimer.Start();
 
         CurrentPopup = this;
     }
@@ -157,13 +157,13 @@ public partial class PopupForm : Form {
             if (this.Opacity < 1)
                 this.Opacity += FadeStep;
             else
-                TadeTimer.Stop();
+                FadeTimer.Stop();
         }
         else {
             if (this.Opacity > 0)
                 this.Opacity -= FadeStep;
             else {
-                TadeTimer.Stop();
+                FadeTimer.Stop();
                 this.Close();
             }
         }
@@ -183,6 +183,6 @@ public partial class PopupForm : Form {
     private void TimerClose_Tick(object sender, EventArgs e) {
         TimerClose.Stop();
         FadingIn = false;
-        TadeTimer.Start();
+        FadeTimer.Start();
     }
 }
