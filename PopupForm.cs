@@ -41,7 +41,11 @@ public partial class PopupForm : Form {
         this.StartPosition = FormStartPosition.Manual;
         this.FormBorderStyle = FormBorderStyle.None;
         this.BackColor = SystemAccentColor.GetAccentColor();
-        this.Size = new Size(180, 100);
+        // Get the working area of the primary screen
+        Rectangle workingArea = Screen.PrimaryScreen.WorkingArea;
+
+        // Set the form size to 25% of the screen's width and 10% of the screen's height (adjust as needed)
+        this.Size = new Size(workingArea.Width / 4, workingArea.Height / 10);
         this.TopMost = true;
         this.ShowInTaskbar = false;
         this.Opacity = 0;
@@ -121,8 +125,8 @@ public partial class PopupForm : Form {
 
         Size TextSize = TextRenderer.MeasureText(Message, lblMessage.Font);
 
-        int HorizontalPadding = 40;
-        int verticalPadding = 40;
+        int HorizontalPadding = 20;
+        int verticalPadding = 30;
 
         this.Size = new Size(TextSize.Width + HorizontalPadding, TextSize.Height + verticalPadding);
 
