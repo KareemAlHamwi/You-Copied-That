@@ -28,3 +28,4 @@ d:\Educational & Miscellaneous\Programming\.Programming Advices\.Projects\CtrlCP
 d:\Educational & Miscellaneous\Programming\.Programming Advices\.Projects\CtrlCPopup\bin\Debug\net8.0-windows\runtimes\win-x86\native\uiohook.dll
 D:\Educational & Miscellaneous\Programming\.Programming Advices\.Projects\CtrlCPopup\obj\Debug\net8.0-windows\CtrlCPopup.csproj.Up2Date
 D:\Educational & Miscellaneous\Programming\.Programming Advices\.Projects\CtrlCPopup\obj\Debug\net8.0-windows\CtrlCPopup.PopupForm.resources
+d:\Educational & Miscellaneous\Programming\.Programming Advices\.Projects\CtrlCPopup\obj\Debug\net8.0-windows\CtrlCPopup.sourcelink.json
