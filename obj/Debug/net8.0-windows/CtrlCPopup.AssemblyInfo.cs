@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CtrlCPopup")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+677d623755aca8fc5c1d20bc64c643980fd11a56")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9f2fe98947a5789d35023a6a197cd92b2595e63b")]
 [assembly: System.Reflection.AssemblyProductAttribute("CtrlCPopup")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CtrlCPopup")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
