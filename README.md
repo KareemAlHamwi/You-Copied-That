@@ -35,9 +35,9 @@ If you want the app to start automatically when you turn on your computer, you c
 
 ### Steps:
 
-1. Download [here]() first:
+1. Download the `bin\Debug\net8.0-windows` build files first:
 
-   - Transfer the files to your preferred directory.
+   - Transfer the files in a folder to your preferred directory.
 
 2. Open the Registry Editor:
 
