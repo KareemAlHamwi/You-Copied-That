@@ -29,7 +29,7 @@ public class CtrlCListener : Form {
 
                 if (CurrentText != lastClipboardText) {
                     lastClipboardText = CurrentText;
-                    new PopupForm().ShowPopup("Copied!");
+                    new PopupForm().ShowPopup("Copied!",10);
                 }
                 //! Might figure it out later
                 //? Like a random funny stuff to say if user is paranoid
