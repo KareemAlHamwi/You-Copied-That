@@ -35,9 +35,9 @@ If you want the app to start automatically when you turn on your computer, you c
 
 ### Steps:
 
-1. Download:
+1. Download [here]() first:
 
-   - what
+   - Transfer the files to your preferred directory.
 
 2. Open the Registry Editor:
 
@@ -52,33 +52,7 @@ If you want the app to start automatically when you turn on your computer, you c
 4. Add a new string value:
    - Right-click on the right pane, select `New > String Value`.
    - Name it something like `YouCopiedThat`.
-   - Set the value to the full path of the app's executable (e.g., `C:\Path\To\YouCopiedThat.exe`).
-
-### Code Example:
-
-If you want to do it programmatically, here's some C# code:
-
-```csharp
-using Microsoft.Win32;
-
-public static void AddToStartup() {
-    using (RegistryKey key = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true)) {
-        key.SetValue("YouCopiedThat", Application.ExecutablePath);
-    }
-}
-
-public static void RemoveFromStartup() {
-    using (RegistryKey key = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true)) {
-        key.DeleteValue("YouCopiedThat", false);
-    }
-}
-```
-
-### Explanation:
-
-- **`Application.ExecutablePath`**: Gets the full path to the app's executable.
-- **`SetValue`**: Adds the app to the startup list.
-- **`DeleteValue`**: Removes the app from the startup list.
+   - Set the value to the full path of the app's executable (e.g., `C:\Path\To\CtrlCPopup.exe`).
 
 ---
 
@@ -142,5 +116,3 @@ If you want to help out with this project, feel free to fork the repo and submit
 ---
 
 Let me know if you have any other ideas or if you want to tweak anything!
-
-Ctrl+C, but make it trustworthy—because sometimes you swear it worked, but it didn’t.
