@@ -1,8 +1,16 @@
-# You Copied That! V1.0.0
+# You Copied That! V1.0.1
 
 A lightweight utility that monitors the clipboard for Ctrl+C (copy) events and displays a popup notification when text is copied. Built with C# and Windows Forms
 
+**Why I made this?**
+
 I made this because sometimes I hit Ctrl+C and I swear I think it worked, but it didn't for some reason. Now I know for sure when it works!
+
+**One thing though ...**
+
+Trust the app. Seriously. Just trust it.
+
+(Disobedience will be noted 👀)
 
 ---
 
@@ -12,7 +20,7 @@ The app is pretty simple right now, but it does what it's supposed to. Here's wh
 
 1. **CtrlCListener.cs**:
 
-   - Listens for clipboard updates and checks if Ctrl+C is pressed.
+   - Listens for clipboard updates and checks if any copy command is given.
    - Displays a popup notification when new text is copied.
 
 2. **PopupForm.cs**:

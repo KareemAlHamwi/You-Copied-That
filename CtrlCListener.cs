@@ -22,7 +22,8 @@ public class CtrlCListener : Form {
         "Nice try, it's still there",
         "Paste it already!",
         "You're obsessed with this one huh",
-        "Copy... again? Bold move"
+        "Copy... again? Bold move",
+        "Trust me or else .."
     };
 
     public CtrlCListener() {
