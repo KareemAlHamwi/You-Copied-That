@@ -15,3 +15,20 @@ D:\Educational & Miscellaneous\Programming\.Programming Advices\.Projects\CtrlCP
 D:\Educational & Miscellaneous\Programming\.Programming Advices\.Projects\CtrlCPopup\obj\Debug\net8.0-windows\ref\CtrlCPopup.dll
 d:\Educational & Miscellaneous\Programming\.Programming Advices\.Projects\CtrlCPopup\obj\Debug\net8.0-windows\CtrlCPopup.sourcelink.json
 D:\Educational & Miscellaneous\Programming\.Programming Advices\.Projects\CtrlCPopup\obj\Debug\net8.0-windows\PopupForm.resources
+c:\Educational & Miscellaneous\Programming\.Projects\CtrlCPopup\obj\Debug\net8.0-windows\PopupForm.resources
+c:\Educational & Miscellaneous\Programming\.Projects\CtrlCPopup\obj\Debug\net8.0-windows\CtrlCPopup.csproj.GenerateResource.cache
+c:\Educational & Miscellaneous\Programming\.Projects\CtrlCPopup\obj\Debug\net8.0-windows\CtrlCPopup.GeneratedMSBuildEditorConfig.editorconfig
+c:\Educational & Miscellaneous\Programming\.Projects\CtrlCPopup\obj\Debug\net8.0-windows\CtrlCPopup.AssemblyInfoInputs.cache
+c:\Educational & Miscellaneous\Programming\.Projects\CtrlCPopup\obj\Debug\net8.0-windows\CtrlCPopup.AssemblyInfo.cs
+c:\Educational & Miscellaneous\Programming\.Projects\CtrlCPopup\obj\Debug\net8.0-windows\CtrlCPopup.csproj.CoreCompileInputs.cache
+c:\Educational & Miscellaneous\Programming\.Projects\CtrlCPopup\obj\Debug\net8.0-windows\CtrlCPopup.sourcelink.json
+c:\Educational & Miscellaneous\Programming\.Projects\CtrlCPopup\obj\Debug\net8.0-windows\CtrlCPopup.dll
+c:\Educational & Miscellaneous\Programming\.Projects\CtrlCPopup\obj\Debug\net8.0-windows\refint\CtrlCPopup.dll
+c:\Educational & Miscellaneous\Programming\.Projects\CtrlCPopup\obj\Debug\net8.0-windows\CtrlCPopup.pdb
+c:\Educational & Miscellaneous\Programming\.Projects\CtrlCPopup\bin\Debug\net8.0-windows\CtrlCPopup.exe
+C:\Educational & Miscellaneous\Programming\.Projects\CtrlCPopup\bin\Debug\net8.0-windows\CtrlCPopup.deps.json
+C:\Educational & Miscellaneous\Programming\.Projects\CtrlCPopup\bin\Debug\net8.0-windows\CtrlCPopup.runtimeconfig.json
+c:\Educational & Miscellaneous\Programming\.Projects\CtrlCPopup\bin\Debug\net8.0-windows\CtrlCPopup.dll
+c:\Educational & Miscellaneous\Programming\.Projects\CtrlCPopup\bin\Debug\net8.0-windows\CtrlCPopup.pdb
+C:\Educational & Miscellaneous\Programming\.Projects\CtrlCPopup\obj\Debug\net8.0-windows\CtrlCPopup.genruntimeconfig.cache
+C:\Educational & Miscellaneous\Programming\.Projects\CtrlCPopup\obj\Debug\net8.0-windows\ref\CtrlCPopup.dll

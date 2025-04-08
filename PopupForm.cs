@@ -1,22 +1,48 @@
-﻿using System.Runtime.InteropServices;
-using System.Drawing.Drawing2D;
+﻿using System.Drawing.Drawing2D;
+using System.Runtime.InteropServices;
 
-public partial class PopupForm : Form {
-
+public sealed class PopupForm : Form {
     [DllImport("user32.dll")]
     private static extern bool SetProcessDPIAware();
-    private int TargetY;
+
     private const int SlideSpeed = 12;
     private const int CornerRadius = 20;
     private const double FadeStep = 0.05;
-    private System.Windows.Forms.Timer TimerSlide = new System.Windows.Forms.Timer(),
-                                      TimerClose = new System.Windows.Forms.Timer(),
-                                      FadeTimer = new System.Windows.Forms.Timer();
-    private bool FadingIn = true;
-    private static PopupForm CurrentPopup;
-    private Label lblMessage;
+    private static PopupForm _currentPopup = new();
 
-    //? Prevent the popup from stealing focus and hide it from Alt+Tab
+    private readonly Label _lblMessage;
+    private readonly System.Windows.Forms.Timer _timerSlide;
+    private readonly System.Windows.Forms.Timer _timerClose;
+    private readonly System.Windows.Forms.Timer _fadeTimer;
+    private int _targetY;
+    private bool _fadingIn = true;
+
+    // Singleton pattern to ensure only one popup at a time
+    private PopupForm() {
+        if (Environment.OSVersion.Version.Major >= 6) {
+            SetProcessDPIAware();
+        }
+
+        InitializeForm();
+
+        _lblMessage = new Label {
+            AutoSize = true,
+            Font = new Font("Segoe UI", 18, FontStyle.Regular),
+            ForeColor = Color.White,
+            Location = new Point(33, 32)
+        };
+        Controls.Add(_lblMessage);
+
+        _timerSlide = new System.Windows.Forms.Timer { Interval = 10 };
+        _timerSlide.Tick += TimerSlide_Tick;
+
+        _timerClose = new System.Windows.Forms.Timer();
+        _timerClose.Tick += TimerClose_Tick;
+
+        _fadeTimer = new System.Windows.Forms.Timer { Interval = 15 };
+        _fadeTimer.Tick += FadeTimer_Tick;
+    }
+
     protected override CreateParams CreateParams {
         get {
             CreateParams cp = base.CreateParams;
@@ -26,71 +52,76 @@ public partial class PopupForm : Form {
         }
     }
 
-    public PopupForm() {
-        InitializeForm();
+    public static void ShowPopup(string message = "Message", int autoCloseTimeInSeconds = 3) {
+        // Close existing popup if any
+        _currentPopup?.Close();
 
-        FadeTimer.Interval = 15;
-        FadeTimer.Tick += FadeTimer_Tick;
+        // Create and show new popup
+        _currentPopup = new PopupForm();
+        _currentPopup.InitializePopup(message, autoCloseTimeInSeconds);
     }
 
     private void InitializeForm() {
-        if (Environment.OSVersion.Version.Major >= 6) {
-            SetProcessDPIAware();
-        }
+        StartPosition = FormStartPosition.Manual;
+        FormBorderStyle = FormBorderStyle.None;
+        BackColor = SystemAccentColor.GetAccentColor();
+        TopMost = true;
+        ShowInTaskbar = false;
+        Opacity = 0;
+    }
 
-        this.StartPosition = FormStartPosition.Manual;
-        this.FormBorderStyle = FormBorderStyle.None;
-        this.BackColor = SystemAccentColor.GetAccentColor();
-        // Get the working area of the primary screen
-        Rectangle workingArea = Screen.PrimaryScreen.WorkingArea;
+    private void InitializePopup(string message, int autoCloseTimeInSeconds) {
+        _lblMessage.Text = message;
+        _timerClose.Interval = autoCloseTimeInSeconds * 1000;
 
-        // Set the form size to 25% of the screen's width and 10% of the screen's height (adjust as needed)
-        this.Size = new Size(workingArea.Width / 4, workingArea.Height / 10);
-        this.TopMost = true;
-        this.ShowInTaskbar = false;
-        this.Opacity = 0;
+        var textSize = TextRenderer.MeasureText(message, _lblMessage.Font);
+        const int horizontalPadding = 20;
+        const int verticalPadding = 30;
 
-        lblMessage = new Label();
-        lblMessage.AutoSize = true;
-        lblMessage.Font = new Font("Segoe UI", 18, FontStyle.Regular);
-        lblMessage.ForeColor = Color.White;
-        lblMessage.Location = new Point(33, 32);
-        this.Controls.Add(lblMessage);
+        Size = new Size(textSize.Width + horizontalPadding, textSize.Height + verticalPadding);
 
-        TimerSlide.Interval = 10;
-        TimerSlide.Tick += TimerSlide_Tick;
-
-        TimerClose.Tick += TimerClose_Tick;
+        _lblMessage.Location = new Point(
+            (Width - textSize.Width) / 2,
+            (Height - textSize.Height) / 2
+        );
 
         ApplyRoundedCorners();
+
+        var workingArea = Screen.PrimaryScreen.WorkingArea;
+        Left = (workingArea.Width - Width) / 2;
+        Top = workingArea.Height;
+        _targetY = workingArea.Height - Height - 20;
+
+        _fadingIn = true;
+        Opacity = 0;
+
+        Show();
+        _timerSlide.Start();
+        _timerClose.Start();
+        _fadeTimer.Start();
     }
 
     protected override void OnPaint(PaintEventArgs e) {
         e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
         base.OnPaint(e);
 
-        // Optional: draw a smooth border around the form
-        using (GraphicsPath path = GetRoundedRectPath(new Rectangle(0, 0, this.Width, this.Height), CornerRadius)) {
-            using (Pen pen = new Pen(this.BackColor, 1)) {
-                e.Graphics.DrawPath(pen, path);
-            }
+        using (var path = GetRoundedRectPath(new Rectangle(0, 0, Width, Height), CornerRadius))
+        using (var pen = new Pen(BackColor, 1)) {
+            e.Graphics.DrawPath(pen, path);
         }
     }
 
-    private GraphicsPath GetRoundedRectPath(Rectangle Bounds, int Radius) {
-        GraphicsPath path = new GraphicsPath();
-        int diameter = Radius * 2;
-        Rectangle arc = new Rectangle(Bounds.Location, new Size(diameter, diameter));
+    private GraphicsPath GetRoundedRectPath(Rectangle bounds, int radius) {
+        var path = new GraphicsPath();
+        var diameter = radius * 2;
+        var arc = new Rectangle(bounds.Location, new Size(diameter, diameter));
 
         path.AddArc(arc, 180, 90);
-
-        arc.X = Bounds.Right - diameter;
+        arc.X = bounds.Right - diameter;
         path.AddArc(arc, 270, 90);
-
-        arc.Y = Bounds.Bottom - diameter;
+        arc.Y = bounds.Bottom - diameter;
         path.AddArc(arc, 0, 90);
-
-        arc.X = Bounds.Left;
+        arc.X = bounds.Left;
         path.AddArc(arc, 90, 90);
         path.CloseFigure();
 
@@ -98,8 +129,8 @@ public partial class PopupForm : Form {
     }
 
     private void ApplyRoundedCorners() {
-        using (GraphicsPath path = new GraphicsPath()) {
-            Rectangle bounds = new Rectangle(0, 0, this.Width, this.Height);
+        using (var path = new GraphicsPath()) {
+            var bounds = new Rectangle(0, 0, Width, Height);
 
             path.StartFigure();
             path.AddArc(bounds.X, bounds.Y, CornerRadius * 2, CornerRadius * 2, 180, 90);
@@ -108,81 +139,52 @@ public partial class PopupForm : Form {
             path.AddArc(bounds.X, bounds.Bottom - CornerRadius * 2, CornerRadius * 2, CornerRadius * 2, 90, 90);
             path.CloseFigure();
 
-            this.Region = new Region(path);
+            Region = new Region(path);
         }
 
-        this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint, true);
-        this.UpdateStyles();
-    }
-
-    public void ShowPopup(string Message, int AutoCloseTimeInSeconds = 1) {
-        if (CurrentPopup != null && !CurrentPopup.IsDisposed) {
-            CurrentPopup.Close();
-        }
-
-        lblMessage.Text = Message;
-        TimerClose.Interval = AutoCloseTimeInSeconds * 1000;
-
-        Size TextSize = TextRenderer.MeasureText(Message, lblMessage.Font);
-
-        int HorizontalPadding = 20;
-        int verticalPadding = 30;
-
-        this.Size = new Size(TextSize.Width + HorizontalPadding, TextSize.Height + verticalPadding);
-
-        lblMessage.Location = new Point(
-            (this.Width - TextSize.Width) / 2,
-            (this.Height - TextSize.Height) / 2
-        );
-
-        ApplyRoundedCorners();
-
-        this.Left = (Screen.PrimaryScreen.WorkingArea.Width - this.Width) / 2;
-        this.Top = Screen.PrimaryScreen.WorkingArea.Height;
-        TargetY = Screen.PrimaryScreen.WorkingArea.Height - this.Height - 20;
-
-        FadingIn = true;
-        this.Opacity = 0;
-
-        this.Show();
-        TimerSlide.Start();
-        TimerClose.Start();
-        FadeTimer.Start();
-
-        CurrentPopup = this;
+        SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint, true);
+        UpdateStyles();
     }
 
     private void FadeTimer_Tick(object sender, EventArgs e) {
-        if (FadingIn) {
-            if (this.Opacity < 1)
-                this.Opacity += FadeStep;
+        if (_fadingIn) {
+            if (Opacity < 1)
+                Opacity += FadeStep;
             else
-                FadeTimer.Stop();
+                _fadeTimer.Stop();
         }
         else {
-            if (this.Opacity > 0)
-                this.Opacity -= FadeStep;
+            if (Opacity > 0)
+                Opacity -= FadeStep;
             else {
-                FadeTimer.Stop();
-                this.Close();
+                _fadeTimer.Stop();
+                Close();
             }
         }
     }
 
-
     private void TimerSlide_Tick(object sender, EventArgs e) {
-        if (this.Top > TargetY) {
-            this.Top -= SlideSpeed;
+        if (Top > _targetY) {
+            Top -= SlideSpeed;
         }
         else {
-            TimerSlide.Stop();
+            _timerSlide.Stop();
         }
     }
 
-    // Instead of immediately closing, start fade-out
     private void TimerClose_Tick(object sender, EventArgs e) {
-        TimerClose.Stop();
-        FadingIn = false;
-        FadeTimer.Start();
+        _timerClose.Stop();
+        _fadingIn = false;
+        _fadeTimer.Start();
+    }
+
+    protected override void Dispose(bool disposing) {
+        if (disposing) {
+            _timerSlide?.Dispose();
+            _timerClose?.Dispose();
+            _fadeTimer?.Dispose();
+            _lblMessage?.Dispose();
+        }
+        base.Dispose(disposing);
     }
 }

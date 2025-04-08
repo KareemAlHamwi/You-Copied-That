@@ -3,17 +3,27 @@ using System.Runtime.InteropServices;
 public class CtrlCListener : Form {
     [DllImport("user32.dll")]
     private static extern bool AddClipboardFormatListener(IntPtr hWnd);
-
     [DllImport("user32.dll")]
     private static extern bool RemoveClipboardFormatListener(IntPtr hWnd);
-
     [DllImport("user32.dll")]
     private static extern short GetAsyncKeyState(int vKey);
-
     private const int WM_CLIPBOARDUPDATE = 0x031D;
-    private const int VK_CONTROL = 0x11;
-    private const int VK_C = 0x43;
-    private string lastClipboardText = "";
+    private string LastClipboardText = "";
+
+    private static readonly Random Rand = new Random();
+    private static readonly string[] FunnyMessages =
+    {
+        "You already copied that, genius",
+        "Trying to break the Matrix?",
+        "Copycat strikes again!",
+        "Still the same, buddy",
+        "Déjà vu vibes ✨",
+        "Ctrl+C fan club president?",
+        "Nice try, it's still there",
+        "Paste it already!",
+        "You're obsessed with this one huh",
+        "Copy... again? Bold move"
+    };
 
     public CtrlCListener() {
         this.Load += (s, e) => AddClipboardFormatListener(this.Handle);
@@ -24,26 +34,41 @@ public class CtrlCListener : Form {
 
     protected override void WndProc(ref Message m) {
         if (m.Msg == WM_CLIPBOARDUPDATE) {
-            if (IsCtrlCPressed()) {
-                string CurrentText = Clipboard.GetText();
-
-                if (CurrentText != lastClipboardText) {
-                    lastClipboardText = CurrentText;
-                    new PopupForm().ShowPopup("Copied!");
-                }
-                //! Might figure it out later
-                //? Like a random funny stuff to say if user is paranoid
-                // else if (currentText == lastClipboardText) {
-                //     new PopupForm().ShowPopup("Dude chillax");
-                // }
-            }
+            HandleClipboardChange();
         }
 
         base.WndProc(ref m);
     }
 
-    private bool IsCtrlCPressed() {
-        return (GetAsyncKeyState(VK_CONTROL) & 0x8000) != 0 &&
-               (GetAsyncKeyState(VK_C) & 0x8000) != 0;
+    private async void HandleClipboardChange() {
+        await Task.Delay(100);
+
+        if (Clipboard.ContainsText()) {
+            string currentText = Clipboard.GetText();
+            if (currentText != LastClipboardText) {
+                LastClipboardText = currentText;
+
+                this.BeginInvoke((Action)(() => {
+                    PopupForm.ShowPopup("Copied!");
+                }));
+            }
+            else {
+                try {
+                    string randomMessage = FunnyMessages[Rand.Next(FunnyMessages.Length)];
+
+                    this.BeginInvoke((Action)(() => {
+                        PopupForm.ShowPopup(randomMessage);
+                    }));
+                }
+                catch (Exception) {
+                    throw;
+                }
+            }
+        }
     }
+
+    // private bool IsCtrlCPressed() {
+    //     return (GetAsyncKeyState(VK_CONTROL) & 0x8000) != 0 &&
+    //            (GetAsyncKeyState(VK_C) & 0x8000) != 0;
+    // }
 }
