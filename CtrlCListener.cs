@@ -3,13 +3,18 @@ using System.Runtime.InteropServices;
 public class CtrlCListener : Form {
     [DllImport("user32.dll")]
     private static extern bool AddClipboardFormatListener(IntPtr hWnd);
+
     [DllImport("user32.dll")]
     private static extern bool RemoveClipboardFormatListener(IntPtr hWnd);
+
     [DllImport("user32.dll")]
     private static extern short GetAsyncKeyState(int vKey);
-    private const int WM_CLIPBOARDUPDATE = 0x031D;
-    private string LastClipboardText = "";
 
+    private const int WM_CLIPBOARDUPDATE = 0x031D;
+    private const int VK_CONTROL = 0x11;
+    private const int VK_C = 0x43;
+    private string lastClipboardText = "";
+    private bool FirstFunnyMessage;
     private static readonly Random Rand = new Random();
     private static readonly string[] FunnyMessages =
     {
@@ -35,41 +40,31 @@ public class CtrlCListener : Form {
 
     protected override void WndProc(ref Message m) {
         if (m.Msg == WM_CLIPBOARDUPDATE) {
-            HandleClipboardChange();
+            _HandleCopying();
         }
 
         base.WndProc(ref m);
     }
 
-    private async void HandleClipboardChange() {
-        await Task.Delay(100);
+    private void _HandleCopying() {
+        if (_IsCtrlCPressed()) {
+            string CurrentText = Clipboard.GetText();
+            string RandomMessage = FunnyMessages[Rand.Next(FunnyMessages.Length)];
 
-        if (Clipboard.ContainsText()) {
-            string currentText = Clipboard.GetText();
-            if (currentText != LastClipboardText) {
-                LastClipboardText = currentText;
-
-                this.BeginInvoke((Action)(() => {
-                    PopupForm.ShowPopup("Copied!");
-                }));
+            if (CurrentText != lastClipboardText) {
+                lastClipboardText = CurrentText;
+                PopupForm.ShowPopup("Copied!");
+                FirstFunnyMessage = true;
             }
-            else {
-                try {
-                    string randomMessage = FunnyMessages[Rand.Next(FunnyMessages.Length)];
-
-                    this.BeginInvoke((Action)(() => {
-                        PopupForm.ShowPopup(randomMessage);
-                    }));
-                }
-                catch (Exception) {
-                    throw;
-                }
+            else if (CurrentText == lastClipboardText && FirstFunnyMessage) {
+                PopupForm.ShowPopup(RandomMessage);
+                FirstFunnyMessage = false;
             }
         }
     }
 
-    // private bool IsCtrlCPressed() {
-    //     return (GetAsyncKeyState(VK_CONTROL) & 0x8000) != 0 &&
-    //            (GetAsyncKeyState(VK_C) & 0x8000) != 0;
-    // }
+    private bool _IsCtrlCPressed() {
+        return (GetAsyncKeyState(VK_CONTROL) & 0x8000) != 0 &&
+               (GetAsyncKeyState(VK_C) & 0x8000) != 0;
+    }
 }
